@@ -14,7 +14,13 @@ composer require thefunpower/captcha
 get_captcha_init();
 ?>
 ~~~
- 
+
+触发验证码
+
+~~~
+$('#t_captcha_input').trigger('click'); 
+~~~
+
 点击验证码后执行JS
 
 ~~~
