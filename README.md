@@ -14,13 +14,7 @@ composer require thefunpower/captcha
 get_captcha_init();
 ?>
 ~~~
-
-在需要触发验证码弹出时加入以下代码 
-
-~~~
-$('#t_captcha_input').trigger('click'); 
-~~~
-
+ 
 点击验证码后执行JS
 
 ~~~
