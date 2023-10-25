@@ -25,11 +25,21 @@ $('#t_captcha_input').trigger('click');
 
 ~~~
 $vue->method("after_captcha()","
+	let f = {}; 
+	//或
+	f.captcha = {
+		appid:this.form.appid,
+		ticket:this.form.ticket,
+		randstr:this.form.randstr, 
+	};
 ");
 ~~~
 
 
 ### 服务端验证
+
+验证是POST中的captcha数组 `appid` `ticket` `randstr`
+
 ~~~
 get_captcha_check();
 ~~~
