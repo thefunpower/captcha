@@ -8,6 +8,7 @@ use TencentCloud\Captcha\V20190722\CaptchaClient;
 use TencentCloud\Captcha\V20190722\Models\DescribeCaptchaResultRequest;
 
 class Tencent{
+	public static $form = 'form';
 	public function check(){
 		try {
 		    // 实例化一个认证对象，入参需要传入腾讯云账户 SecretId 和 SecretKey，此处还需注意密钥对的保密
@@ -84,7 +85,8 @@ class Tencent{
 		echo '<script src="https://turing.captcha.qcloud.com/TCaptcha.js"></script>';
 	}
 
-	public function js_code($form = 'form'){
+	public function js_code(){
+		$form = self::$form;
 		$captcha_app_id = get_config('tencent_captcha_app_id');
 		if(!$captcha_app_id){
 			echo "tencent_captcha_app_id 未配置，请访问 https://console.cloud.tencent.com/captcha/graphical";
@@ -109,7 +111,7 @@ class Tencent{
 	          	app.<?=$form?>.randstr =  res.randstr;
 	          	app.<?=$form?>.ticket  =  res.ticket;
 	          	app.<?=$form?>.appid   =  res.appid;
-
+	          	app.after_captcha();
 	          }
 	      }
 	  
