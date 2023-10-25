@@ -34,7 +34,7 @@ get_captcha_check();
 
 ### 腾讯云验证码
 
-tencent_captcha_app_id 来源
+tencent_captcha_app_id  tencent_captcha_app_key 来源
 
 https://console.cloud.tencent.com/captcha/graphical
 
