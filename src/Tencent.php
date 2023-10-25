@@ -78,11 +78,11 @@ class Tencent{
 	}
 
 	public function button($str = '验证'){
-		echo '<div id="t_captcha_input" class="captcha_clould" >'.$str.'</div>';
+		return '<div id="t_captcha_input" class="captcha_clould" style="display:none;" >'.$str.'</div>';
 	}
 
 	public function js_file(){
-		echo '<script src="https://turing.captcha.qcloud.com/TCaptcha.js"></script>';
+		return '<script src="https://turing.captcha.qcloud.com/TCaptcha.js"></script>';
 	}
 
 	public function js_code(){
