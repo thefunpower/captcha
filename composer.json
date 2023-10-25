@@ -1,0 +1,24 @@
+{
+    "name": "thefunpower/captcha",
+    "type": "library",
+    "description": "captcha",
+    "keywords": ["php"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ken.sun",
+            "email": "sunkangchina@163.com" 
+        }
+    ],
+    "require": {
+        "tencentcloud/tencentcloud-sdk-php": "*"
+    }, 
+    "autoload": {  
+        "files": [ 
+            "./helper.php"
+        ],
+        "psr-4": {
+            "captcha\\": "./src/"
+        }
+    }
+}
