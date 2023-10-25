@@ -37,6 +37,7 @@ get_captcha_check();
 tencent_captcha_app_id 来源
 
 https://console.cloud.tencent.com/captcha/graphical
+
 tencent_secret_id tencent_secret_key 来源
 
 https://console.cloud.tencent.com/cam/capi
