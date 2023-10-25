@@ -14,7 +14,8 @@ class Tencent{
 		    // 代码泄露可能会导致 SecretId 和 SecretKey 泄露，并威胁账号下所有资源的安全性。以下代码示例仅供参考，建议采用更安全的方式来使用密钥，请参见：https://cloud.tencent.com/document/product/1278/85305
 		    // 密钥可前往官网控制台 https://console.cloud.tencent.com/cam/capi 进行获取
 		    $id = get_config('tencent_secret_id');
-		    $key = get_config('tencent_secret_key');
+		    $key = get_config('tencent_secret_key'); 
+		    $app_key = get_config('tencent_captcha_app_key');
 		    if(!$id || !$key){
 		    	return json_error(['msg'=>'缺少 tencent_secret_id tencent_secret_key 可至https://console.cloud.tencent.com/cam/capi 进行获取']);
 		    }
@@ -27,37 +28,63 @@ class Tencent{
 		    $clientProfile = new ClientProfile();
 		    $clientProfile->setHttpProfile($httpProfile);
 		    // 实例化要请求产品的client对象,clientProfile是可选的
-		    $client = new CaptchaClient($cred, "", $clientProfile);
-
+		    $client = new CaptchaClient($cred, "", $clientProfile); 
 		    // 实例化一个请求对象,每个接口都会对应一个request对象
-		    $req = new DescribeCaptchaResultRequest();
-
+		    $req = new DescribeCaptchaResultRequest(); 
+		    $app_id = (int)$_POST['captcha']['appid'];
+		    $captcha_app_id = (int)get_config('tencent_captcha_app_id');
+		    if(!$app_id){
+		    	$app_id = $captcha_app_id;
+		    }
+		    $ticket = $_POST['captcha']['ticket'];
+		    $randstr = $_POST['captcha']['randstr'];
+		    if(!$ticket || !$randstr){
+		    	throw new \Exception("请点击验证码",505); 
+		    }
 		    $params = array(
-
+		    	"CaptchaType" => 1,
+		        "Ticket" => $ticket,
+		        "UserIp" => get_ip(),
+		        "Randstr" =>  $randstr,
+		        "CaptchaAppId" => $app_id,
+		        "AppSecretKey" => $app_key, 
 		    );
-		    $req->fromJsonString(json_encode($params));
-
+		    $req->fromJsonString(json_encode($params)); 
 		    // 返回的resp是一个DescribeCaptchaResultResponse的实例，与请求对象对应
-		    $resp = $client->DescribeCaptchaResult($req);
-
+		    $resp = $client->DescribeCaptchaResult($req); 
 		    // 输出json格式的字符串回包
-		    print_r($resp->toJsonString());
+		    $res = json_decode($resp->toJsonString(),true);
+
+		    if($res['CaptchaMsg'] == 'OK'){
+		    	return;
+		    } 
+		    if($res['CaptchaMsg']){
+		    	throw new \Exception($res['CaptchaMsg']);
+		    	
+		    } 
 		}
 		catch(TencentCloudSDKException $e) {
-		    echo $e;
+		   throw new \Exception($e->getMessage());
 		}
 	} 
-	 
+	
+	public function get(){
+		return [
+			'button'=>$this->button(),
+			'js_file'=>$this->js_file(),
+			'js_code'=>$this->js_code(),
+		];
+	}
 
 	public function button($str = '验证'){
-		echo '<button id="t_captcha_input" type="button">'.$str.'</button>';
+		echo '<div id="t_captcha_input" class="captcha_clould" >'.$str.'</div>';
 	}
 
 	public function js_file(){
 		echo '<script src="https://turing.captcha.qcloud.com/TCaptcha.js"></script>';
 	}
 
-	public function js_code(){
+	public function js_code($form = 'form'){
 		$captcha_app_id = get_config('tencent_captcha_app_id');
 		if(!$captcha_app_id){
 			echo "tencent_captcha_app_id 未配置，请访问 https://console.cloud.tencent.com/captcha/graphical";
@@ -79,14 +106,10 @@ class Tencent{
 	          // res（请求验证码发生错误，验证码自动返回terror_前缀的容灾票据） = {ret: 0, ticket: "String", randstr: "String",  errorCode: Number, errorMessage: "String"}
 	          // 此处代码仅为验证结果的展示示例，真实业务接入，建议基于ticket和errorCode情况做不同的业务处理
 	          if (res.ret === 0) {
-	            // 复制结果至剪切板
-	            var str = '【randstr】->【' + res.randstr + '】      【ticket】->【' + res.ticket + '】';
-	            var ipt = document.createElement('input');
-	            ipt.value = str;
-	            document.body.appendChild(ipt);
-	            ipt.select();
-	            document.execCommand("Copy");
-	            document.body.removeChild(ipt); 
+	          	app.<?=$form?>.randstr =  res.randstr;
+	          	app.<?=$form?>.ticket  =  res.ticket;
+	          	app.<?=$form?>.appid   =  res.appid;
+
 	          }
 	      }
 	  
