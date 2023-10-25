@@ -16,7 +16,7 @@ function get_captcha_check()
 	return $obj->check();
 }
 
-function get_captcha_init()
+function get_captcha_init($output = true)
 {
 	$title = get_captcha_drive();
 	$cls = "\captcha\\".$title;
@@ -25,5 +25,11 @@ function get_captcha_init()
 	}
 	$obj = new $cls;
 	$res = $obj->get();
+	if($output){
+		foreach($res as $v){
+			echo $v;
+		}
+		return;
+	}
 	return $res;
 }

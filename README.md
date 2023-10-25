@@ -8,21 +8,24 @@ composer require thefunpower/captcha
 ~~~
 
 ### 前端调用 
+
 ~~~
 <?php 
-$captcha = get_captcha_init();
-
+get_captcha_init();
 ?>
-<?=$captcha['button']?>
+~~~
+
+在需要触发验证码弹出时加入以下代码 
 
 ~~~
-输入JS文件
+$('#t_captcha_input').trigger('click'); 
 ~~~
-<?=$captcha['js_file']?>
+
+点击验证码后执行JS
+
 ~~~
-输出JS代码 
-~~~
-<?=$captcha['js_code']?>
+$vue->method("after_captcha()","
+");
 ~~~
 
 
