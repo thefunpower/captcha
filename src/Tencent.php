@@ -55,21 +55,20 @@ class Tencent{
 		    $resp = $client->DescribeCaptchaResult($req); 
 		    // 输出json格式的字符串回包
 		    $res = json_decode($resp->toJsonString(),true);
-
-		    if($res['CaptchaMsg'] == 'OK'){
+		    $msg = $res['CaptchaMsg'];
+		    if($msg == 'OK'){
 		    	return;
 		    } 
-		    if($res['CaptchaMsg']){
-		    	$msg = $res['CaptchaMsg'];
-		    	if($ignore_expire && strpos($msg,'户已欠费') !== false){
-		    		return;
-		    	}
-		    	throw new \Exception($msg);
-		    	
+		    if($msg){    
+		    	throw new \Exception($msg); 
 		    } 
 		}
 		catch(TencentCloudSDKException $e) {
-		   throw new \Exception($e->getMessage());
+		   $msg = $e->getMessage();
+		   if($ignore_expire && strpos($msg,'户已欠费') !== false){
+	    		return;
+	       }
+		   throw new \Exception();
 		}
 	} 
 	
