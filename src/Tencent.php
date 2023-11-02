@@ -68,7 +68,7 @@ class Tencent{
 		   if($ignore_expire && strpos($msg,'户已欠费') !== false){
 	    		return;
 	       }
-		   throw new \Exception();
+		   throw new \Exception($msg);
 		}
 	} 
 	
