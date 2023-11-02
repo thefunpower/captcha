@@ -5,7 +5,7 @@ function get_captcha_drive(){
 	return ucfirst(strtolower($title));
 }
 
-function get_captcha_check()
+function get_captcha_check($ignore_expire = false)
 {
 	$title = get_captcha_drive();
 	$cls = "\captcha\\".$title;
@@ -13,7 +13,7 @@ function get_captcha_check()
 		return;
 	}
 	$obj = new $cls;
-	return $obj->check();
+	return $obj->check($ignore_expire);
 }
 
 function get_captcha_init($output = true)
