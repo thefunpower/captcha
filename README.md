@@ -6,10 +6,15 @@
 ~~~
 composer require thefunpower/captcha
 ~~~
+ 
+
 
 ## 阿里云验证码
 
+### 配置
+
 ~~~
+captcha_drive = Aliyun
 alibaba_cloud_access_key_id = 
 alibaba_cloud_access_key_secret = 
 # 可不配置此项
@@ -18,6 +23,16 @@ alibaba_cloud_endpoint = captcha.cn-shanghai.aliyuncs.com
 
 
 ## 腾讯云验证码
+
+### 配置
+
+~~~
+captcha_drive = Tencent
+tencent_secret_id = 
+tencent_secret_key = 
+tencent_captcha_app_id  = 
+tencent_captcha_app_key = 
+~~~
 
 ### 前端调用 
 
@@ -67,13 +82,7 @@ tencent_secret_id tencent_secret_key 来源
 
 https://console.cloud.tencent.com/cam/capi
 
-~~~
-captcha_drive = Tencent
-tencent_secret_id = 
-tencent_secret_key = 
-tencent_captcha_app_id  = 
-tencent_captcha_app_key = 
-~~~
+
  
  
 
