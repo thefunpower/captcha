@@ -7,6 +7,18 @@
 composer require thefunpower/captcha
 ~~~
 
+## 阿里云验证码
+
+~~~
+alibaba_cloud_access_key_id = 
+alibaba_cloud_access_key_secret = 
+# 可不配置此项
+alibaba_cloud_endpoint = captcha.cn-shanghai.aliyuncs.com
+~~~
+
+
+## 腾讯云验证码
+
 ### 前端调用 
 
 ~~~

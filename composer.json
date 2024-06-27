@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "tencentcloud/tencentcloud-sdk-php": "*"
+        "tencentcloud/tencentcloud-sdk-php": "*",
+        "alibabacloud/captcha-20230305": "1.1.2"
     }, 
     "autoload": {  
         "files": [ 
