@@ -1,7 +1,10 @@
 <?php 
 
 function get_captcha_drive(){
-	$title = get_config('captcha_drive')?:'Tencent';
+	$title = get_config('send_phone_code_type');
+	if(!$title || $title == 'think'){ 
+		$title = get_config('captcha_drive')?:'Tencent';
+	} 
 	return ucfirst(strtolower($title));
 }
 
