@@ -115,30 +115,15 @@ class Aliyun {
                */
               async function captchaVerifyCallback(captchaVerifyParam) {  
                 let flag = false;
-                $.ajax({
-                    url: "/captcha/aliyun",
-                    type: "POST",
-                    async: false,
-                    dataType: "json",
-                    data:{aliyun_cap:captchaVerifyParam},
-                    success: function(res){
-                        if(res.code == 0){
-                            flag = true;
-                        }else{
-                            flag = false;
-                        }
-                    },
-                    error: function(xhr, status, error){
-                        // 处理错误
-                    }
-                }); 
+                app.form.aliyun_cap = captchaVerifyParam;
+                app.after_captcha(); 
                 const verifyResult = {
                   captchaResult: flag, // 验证码验证是否通过，boolean类型，必选
                   bizResult: '', // 业务验证是否通过，boolean类型，可选；若为无业务验证结果的场景，bizResult可以为空
                 };
                 if(flag){
                     app.form.aliyun_cap = captchaVerifyParam;
-                    app.after_captcha();
+                    
                 }
                 return verifyResult;
               }
